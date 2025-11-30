@@ -12,7 +12,8 @@ col1, col2, col3 = st.columns(3)
 with col1:
     n1 = st.number_input("Crash 1", min_value=1.0, value=1.0, step=0.1)
 with col2:
-st.number_input("Crash 2", min_value=1.0, value=1.0, step=0.1)
+    n2 = st.number_input("Crash 2", min_value=1.0, value=1.0, step=0.1)
+
 with col3:
     n3 = st.number_input("Crash 3", min_value=1.0, value=1.0, step=0.1)
 
