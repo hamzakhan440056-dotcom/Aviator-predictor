@@ -72,6 +72,7 @@ if predict_clicked:
         st.balloons()
         st.info("High value predicted — stay alert!")
     elif predicted < 1.5:
+        
     st.warning("Low value — play safe!")    
 
 # Export CSV
