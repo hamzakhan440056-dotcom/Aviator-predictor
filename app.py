@@ -71,9 +71,11 @@ if predict_clicked:
         st.audio("https://www.soundjay.com/button/beep-07.wav", format="audio/wav")
         st.balloons()
         st.info("High value predicted — stay alert!")
+    if predicted > 5:
+        st.info("🚨 High value — play smart!")
+        st.audio("https://www.soundjay.com/buttons/sounds/beep-07.mp3")
     elif predicted < 1.5:
-        
-    st.warning("Low value — play safe!")    
+        st.warning("⚠️ Low value — play safe!")
 
 # Export CSV
 if export_clicked and st.session_state.history:
