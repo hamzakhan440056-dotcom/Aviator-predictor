@@ -16,7 +16,7 @@ if theme == "Dark":
 st.title("✈️ Aviator Crash Point Predictor")
 st.markdown("AI-based improved prediction — aakhri 3 crash points daalein:")
 
-Last inputs stored
+# Last inputs stored
 if "inputs" not in st.session_state:
     st.session_state.inputs = [1.0, 1.0, 1.0]
 
