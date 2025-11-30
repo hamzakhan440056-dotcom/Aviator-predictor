@@ -54,7 +54,7 @@ with col_btn2:
 with col_btn3:
     export_clicked = st.button("⬇️ Export CSV")
 
-Clear
+# Clear
 if clear_clicked:
     st.session_state.history = []
     st.success("History cleared!")
