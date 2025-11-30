@@ -59,7 +59,7 @@ if clear_clicked:
     st.session_state.history = []
     st.success("History cleared!")
 
-Predict
+# Predict
 if predict_clicked:
     last_points = [n1, n2, n3]
     predicted = improved_prediction(last_points)
