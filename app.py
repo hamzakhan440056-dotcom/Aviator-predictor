@@ -5,7 +5,7 @@ import pandas as pd
 import base64
 from datetime import datetime
 
-Page setup
+# Page setup
 st.set_page_config(page_title="Aviator Predictor", layout="centered")
 
 Theme toggle
