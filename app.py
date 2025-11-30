@@ -71,9 +71,9 @@ if predict_clicked:
         st.audio("https://www.soundjay.com/button/beep-07.wav", format="audio/wav")
         st.balloons()
         st.info("High value predicted — stay alert!")
-    if predicted > 5:
+    if predicted > 5:    
         st.info("🚨 High value — play smart!")
-        st.audio("https://www.soundjay.com/buttons/sounds/beep-07.mp3")
+        st.audio("https://www.soundjay.com/buttons/sounds/beep-07.mp3")    
     elif predicted < 1.5:
         st.warning("⚠️ Low value — play safe!")
 
