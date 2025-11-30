@@ -3,9 +3,8 @@ import random
 import matplotlib.pyplot as plt
 
 st.set_page_config(page_title="Aviator Predictor", layout="centered")
-
 st.title("✈️ Aviator Crash Point Predictor")
-st.markdown("AI‑based prediction — aakhri 3 crash points daalein:")
+st.markdown("AI‑based improved prediction — aakhri 3 crash points daalein:")
 
 # Input fields
 col1, col2, col3 = st.columns(3)
@@ -16,7 +15,16 @@ with col2:
 with col3:
     n3 = st.number_input("Crash 3", min_value=1.0, value=1.0, step=0.1)
 
-# Initialize history list if not already
+# Improved prediction logic
+def improved_prediction(crash_points):
+    weights = [0.2, 0.3, 0.5]  # recent point ko zyada weight
+    weighted_avg = sum(w * cp for w, cp in zip(weights, crash_points))
+    trend = crash_points[-1] - crash_points[-2]
+    noise = random.uniform(-0.05, 0.05) * weighted_avg
+    prediction = weighted_avg + (trend * 0.3) + noise
+return round(max(1.0, prediction), 2)
+
+# History initialize
 if 'history' not in st.session_state:
     st.session_state.history = []
 
@@ -31,22 +39,19 @@ if clear_clicked:
     st.session_state.history = []
 
 if predict_clicked:
-# Improved (simple) logic: average of last inputs + small random noise
-    avg = (n1 + n2 + n3) / 3
-    noise = random.uniform(-0.5, 0.5)
-    predicted = round(max(1.0, avg + noise), 2)
+    last_points = [n1, n2, n3]
+    predicted = improved_prediction(last_points)
     st.session_state.history.append(predicted)
     st.success(f"🔮 Next Crash Prediction: {predicted}x")
 
-# Show history if exists
+# Show history + chart
 if st.session_state.history:
     st.subheader("📜 Previous Predictions:")
-    # Show last 10 (or fewer) predictions
     recent = list(reversed(st.session_state.history[-10:]))
     for idx, val in enumerate(recent, 1):
         st.write(f"{idx}. {val}x")
 
-    # Additionally show a simple chart of history
+    # Chart
     fig, ax = plt.subplots()
     ax.plot(range(1, len(st.session_state.history)+1), st.session_state.history, marker='o')
     ax.set_title("Prediction History Chart")
