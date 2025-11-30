@@ -22,7 +22,7 @@ def improved_prediction(crash_points):
     trend = crash_points[-1] - crash_points[-2]
     noise = random.uniform(-0.05, 0.05) * weighted_avg
     prediction = weighted_avg + (trend * 0.3) + noise
-return round(max(1.0, prediction), 2)
+    return round(max(1.0, prediction), 2)
 
 # History initialize
 if 'history' not in st.session_state:
