@@ -98,4 +98,4 @@ if st.session_state.history:
     ax.set_title("Crash Prediction Chart")
     ax.set_xlabel("Prediction #")
     ax.set_ylabel("Crash Value (x)")
-    st.py.pyplot(fig)
+    st.pyploy(fig)
