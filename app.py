@@ -42,10 +42,9 @@ if predict_btn:
     st.session_state.history.append((result, time.strftime("%H:%M:%S")))
 
     st.markdown(f"### 🔮 Prediction: *{result}x*")
-    progress_width = min(100, int((result / 10) * 100))
-    st.markdown(f"""<div class='neon-bar' style='width:{progress_width}%;'></div>""", unsafe_allow_html=True)
+    pprogresswidth = min(100, int((result / 10) * 100)st.markdown(f"""<div class='neon-bar' style='width:{progress_width}%;'></div>""", unsafe_allow_html=True)
 
-    if result < 1.5:
+    iffresultlt < 1.5:
         st.warning("⚠️ Low value — play safe!")
     elif result > 5:
         st.success("🚀 High prediction! Good time to fly!")
