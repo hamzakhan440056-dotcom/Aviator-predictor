@@ -1,38 +1,38 @@
-import streamlit as st
+ import streamlit as st
 import random
 import matplotlib.pyplot as plt
 import pandas as pd
-import base64
+import time
 from datetime import datetime
-
-# Page setup
-st.set_page_config(page_title="Aviator Predictor", layout="centered")
+from io import StringIO
+import base64
 
 # Theme toggle
 theme = st.radio("Select Theme:", ["Light", "Dark"], horizontal=True)
 if theme == "Dark":
-    st.markdown("<style>body { background-color: #0e1117; color: white; }</style>", unsafe_allow_html=True)
+    st.markdown("<style>body { background-color: #1e1e1e; color: white; }</style>", unsafe_allow_html=True)
 
 st.title("✈️ Aviator Crash Point Predictor")
 st.markdown("AI-based improved prediction — aakhri 3 crash points daalein:")
 
-# Last inputs stored
-if "inputs" not in st.session_state:
-    st.session_state.inputs = [1.0, 1.0, 1.0]
+Initialize session state
+for key in ["history", "inputs"]:
+    if key not in st.session_state:
+        st.session_state[key] = []
 
-# Crash inputs
+# Inputs with memory
 col1, col2, col3 = st.columns(3)
 with col1:
-    n1 = st.number_input("Crash 1", min_value=1.0, value=st.session_state.inputs[0], step=0.1)
+    n1 = st.number_input("Crash 1", min_value=1.0, step=0.1,
+                         value=st.session_state.inputs[0] if st.session_state.inputs else 1.0)
 with col2:
-    n2 = st.number_input("Crash 2", min_value=1.0, value=st.session_state.inputs[1], step=0.1)
+    n2 = st.number_input("Crash 2", min_value=1.0, step=0.1,
+                         value=st.session_state.inputs[1] if st.session_state.inputs else 1.0)
 with col3:
-    n3 = st.number_input("Crash 3", min_value=1.0, value=st.session_state.inputs[2], step=0.1)
+n3 = st.number_input("Crash 3", min_value=1.0, step=0.1,
+                         value=st.session_state.inputs[2] if st.session_state.inputs else 1.0)
 
-# Save last inputs
-st.session_state.inputs = [n1, n2, n3]
-
-# Prediction function
+# Prediction logic
 def improved_prediction(crash_points):
     weights = [0.2, 0.3, 0.5]
     weighted_avg = sum(w * cp for w, cp in zip(weights, crash_points))
@@ -40,10 +40,6 @@ def improved_prediction(crash_points):
     noise = random.uniform(-0.05, 0.05) * weighted_avg
     prediction = weighted_avg + (trend * 0.3) + noise
     return round(max(1.0, prediction), 2)
-
-# History init
-if "history" not in st.session_state:
-    st.session_state.history = []
 
 # Buttons
 col_btn1, col_btn2, col_btn3 = st.columns(3)
@@ -54,48 +50,50 @@ with col_btn2:
 with col_btn3:
     export_clicked = st.button("⬇️ Export CSV")
 
-# Clear
+Clear history
 if clear_clicked:
     st.session_state.history = []
-    st.success("History cleared!")
+    st.success("📭 History cleared!")
 
-# Predict
+Prediction
 if predict_clicked:
-    last_points = [n1, n2, n3]
-    predicted = improved_prediction(last_points)
-    st.session_state.history.append((datetime.now(), predicted))
-    st.success(f"🔮 Prediction: {predicted}x")
+    inputs = [n1, n2, n3]
+    st.session_state.inputs = inputs
+    prediction = improved_prediction(inputs)
+    timestamp = datetime.now().strftime("%H:%M:%S")
+    st.session_state.history.append((prediction, timestamp))
+
+    with st.spinner("Calculating..."):
+        time.sleep(1.5)
+    st.success(f"🔮 Prediction: *{prediction}x*")
 
     # Alert
-    if predicted > 5:
-        st.audio("https://www.soundjay.com/button/beep-07.wav", format="audio/wav")
-        st.balloons()
-        st.info("High value predicted — stay alert!")
-    if predicted > 5:    
-        st.info("🚨 High value — play smart!")
-        st.audio("https://www.soundjay.com/buttons/sounds/beep-07.mp3")    
-    elif predicted < 1.5:
-        st.warning("⚠️ Low value — play safe!")
+    if prediction < 1.5:
 
-# Export CSV
-if export_clicked and st.session_state.history:
-    df = pd.DataFrame(st.session_state.history, columns=["Timestamp", "Prediction"])
-    csv = df.to_csv(index=False).encode()
-    b64 = base64.b64encode(csv).decode()
-    href = f'<a href="data:file/csv;base64,{b64}" download="predictions.csv">📥 Download CSV File</a>'
-    st.markdown(href, unsafe_allow_html=True)
+     st.warning("⚠️ Low value — play safe!")
+    elif prediction > 5:
+        st.info("🚀 High prediction! Opportunity alert!")
+        st.audio("https://www.soundjay.com/buttons/beep-07.wav")
 
-# Show history
+History
 if st.session_state.history:
-    st.subheader("📜 Prediction History (latest 10):")
-    for idx, (ts, val) in enumerate(reversed(st.session_state.history[-10:]), 1):
-        st.write(f"{idx}. {val}x — {ts.strftime('%H:%M:%S')}")
+    st.subheader("🧾 Prediction History (latest 10):")
+    recent = st.session_state.history[-10:]
+    for pred, time_str in reversed(recent):
+        st.write(f"*{pred}x* — {time_str}")
 
-    # Chart
+    # Plot
     fig, ax = plt.subplots()
-    y_vals = [v for _, v in st.session_state.history]
-    ax.plot(range(1, len(y_vals)+1), y_vals, marker='o', color='cyan')
-    ax.set_title("Crash Prediction Chart")
+    ax.plot(range(1, len(recent) + 1), [p[0] for p in recent], marker='o')
+    ax.set_title("Prediction History")
     ax.set_xlabel("Prediction #")
     ax.set_ylabel("Crash Value (x)")
     st.pyplot(fig)
+
+Export
+if export_clicked and st.session_state.history:
+    df = pd.DataFrame(st.session_state.history, columns=["Crash Point", "Time"])
+    csv = df.to_csv(index=False)
+    b64 = base64.b64encode(csv.encode()).decode()
+    href = f'<a href="data:file/csv;base64,{b64}" download="aviator_predictions.csv">📥 Download CSV</a>'
+    st.markdown(href, unsafe_allow_html=True)   
