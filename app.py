@@ -43,7 +43,7 @@ if predict_btn:
 
     st.markdown(f"### 🔮 Prediction: *{result}x*")
     pprogresswidth = min(100, int((result / 10) * 100)
-    st.markdown(f"""<div class='neon-bar' style='width:{progress_width}%;'></div>""", unsafe_allow_html=True)
+    st.markdown(f""<div class='neon-bar' style='width:{progress_width}%;'></div>"", unsafe_allow_html=True)
 
     iffresultlt < 1.5:
         st.warning("⚠️ Low value — play safe!")
