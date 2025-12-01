@@ -152,4 +152,4 @@ if st.session_state.history:
 
 # Footer
 st.markdown("---")
-st.markdown("<center>Made with ❤️ by Hamza</center>", unsafe_allow_html=True)
+st.markdown("<center>Made with ❤️ by Hamza khan </center>", unsafe_allow_html=True)
