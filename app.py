@@ -4,10 +4,10 @@ import time
 import matplotlib.pyplot as plt
 import numpy as np
 
---- PAGE SETUP ---
+# --- PAGE SETUP ---
 st.set_page_config(layout="wide", page_title="✈️ Aviator Predictor")
 
---- CUSTOM CSS ---
+# --- CUSTOM CSS ---
 st.markdown("""
     <style>
     body {
@@ -36,7 +36,7 @@ st.markdown("""
         height: 20px;
     st.success("Prediction history cleared!")
 
---- PREDICT ---
+# --- PREDICT ---
 if predict_btn:
     result = predict([n1, n2, n3])
     st.session_state.history.append((result, time.strftime("%H:%M:%S")))
@@ -53,7 +53,7 @@ if predict_btn:
     else:
         st.info("🧠 Moderate prediction.")
 
---- HISTORY ---
+# --- HISTORY ---
 if st.session_state.history:
     st.markdown("## 📜 Prediction History (latest 10):")
     for val, ts in reversed(st.session_state.history[-10:]):
@@ -77,16 +77,16 @@ if st.session_state.history:
     </style>
 """, unsafe_allow_html=True)
 
---- TITLE ---
+# --- TITLE ---
 st.markdown("## ✈️ Aviator Crash Predictor — Powered by AI")
 st.image("plane.gif", width=120)
 st.markdown("Enter last 3 crash values below to predict the next one:")
 
---- SESSION STATE ---
+# --- SESSION STATE ---
 if 'history' not in st.session_state:
     st.session_state.history = []
 
---- INPUT ---
+# --- INPUT ---
 col1, col2, col3 = st.columns(3)
 with col1:
     n1 = st.number_input("Crash 1", min_value=1.0, step=0.1, value=1.0)
@@ -95,7 +95,7 @@ with col2:
 with col3:
     n3 = st.number_input("Crash 3", min_value=1.0, step=0.1, value=1.0)
 
---- PREDICTION FUNCTION ---
+# --- PREDICTION FUNCTION ---
 def predict(crashes):
     weights = [0.2, 0.3, 0.5]
     avg = sum(w * c for w, c in zip(weights, crashes))
@@ -104,7 +104,7 @@ def predict(crashes):
     pred = avg + 0.3 * trend + noise
     return round(max(1.0, pred), 2)
 
---- BUTTONS ---
+# --- BUTTONS ---
 col_btn1, col_btn2 = st.columns(2)
 with col_btn1:
     predict_btn = st.button("🔮 Predict")
