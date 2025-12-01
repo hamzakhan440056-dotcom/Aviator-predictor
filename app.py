@@ -113,5 +113,5 @@ with col_btn2:
 
 if clear_btn:
     st.session_state.history.clear()
---- FOOTER EMOJI ---
+# --- FOOTER EMOJI ---
 st.markdown("### ✈️✨🚀🔥")
