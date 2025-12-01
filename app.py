@@ -15,7 +15,7 @@ if theme == "Dark":
 st.title("✈️ Aviator Crash Point Predictor")
 st.markdown("AI-based improved prediction — aakhri 3 crash points daalein:")
 
-Initialize session state
+# Initialize session state
 for key in ["history", "inputs"]:
     if key not in st.session_state:
         st.session_state[key] = []
@@ -50,12 +50,12 @@ with col_btn2:
 with col_btn3:
     export_clicked = st.button("⬇️ Export CSV")
 
-Clear history
+# Clear history
 if clear_clicked:
     st.session_state.history = []
     st.success("📭 History cleared!")
 
-Prediction
+# Prediction
 if predict_clicked:
     inputs = [n1, n2, n3]
     st.session_state.inputs = inputs
@@ -75,7 +75,7 @@ if predict_clicked:
         st.info("🚀 High prediction! Opportunity alert!")
         st.audio("https://www.soundjay.com/buttons/beep-07.wav")
 
-History
+# History
 if st.session_state.history:
     st.subheader("🧾 Prediction History (latest 10):")
     recent = st.session_state.history[-10:]
@@ -90,7 +90,7 @@ if st.session_state.history:
     ax.set_ylabel("Crash Value (x)")
     st.pyplot(fig)
 
-Export
+# Export
 if export_clicked and st.session_state.history:
     df = pd.DataFrame(st.session_state.history, columns=["Crash Point", "Time"])
     csv = df.to_csv(index=False)
