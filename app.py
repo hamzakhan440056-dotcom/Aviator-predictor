@@ -28,9 +28,9 @@ with col1:
 with col2:
     n2 = st.number_input("Crash 2", min_value=1.0, step=0.1,
                          value=st.session_state.inputs[1] if st.session_state.inputs else 1.0)
-with col3:    
-n3 = st.number_input("Crash 3", min_value=1.0, step=0.1,
-                         value=st.session_state.inputs[2] if st.session_state.inputs else 1.0)    
+with col3: 
+    n3 = st.number_input("Crash 3", min_value=1.0, step=0.1,
+                         value=st.session_state.inputs[2] if st.session_state.inputs else 1.0)
 
 # Prediction logic
 def improved_prediction(crash_points):
