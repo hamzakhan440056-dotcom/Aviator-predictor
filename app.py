@@ -68,7 +68,7 @@ button:hover {
 </style>
 """, unsafe_allow_html=True)
 
-Title and animated airplane GIF from public URL
+# Title and animated airplane GIF from public URL
 st.title("✈️ Aviator Crash Predictor — Powered by AI")
 st.image("https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif", width=150)
 
