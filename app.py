@@ -118,7 +118,7 @@ with st.empty():
         time.sleep(1)
 
 # -------- HISTORY & EXPORT --------
-iifst.session_state.history:
+if st.session_state.history:
     st.subheader("📜 Prediction History (latest 10):")
     hist_df = pd.DataFrame(st.session_state.history, columns=["Prediction", "Time"])
     st.dataframe(hist_df.tail(10), use_container_width=True)
