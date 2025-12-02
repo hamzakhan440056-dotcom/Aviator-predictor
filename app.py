@@ -108,7 +108,7 @@ with st.form("prediction_form"):
 st.markdown(f"""<div class='neon-bar' style='width:{progress_width}%;'></div>""", unsafe_allow_html=True)
 
     # Countdown Timer
-    with st.empty():
+        with st.empty():
         for i in range(5, 0, -1):
             st.info(f"⏳ Next prediction in {i} sec...")
             time.sleep(1)
