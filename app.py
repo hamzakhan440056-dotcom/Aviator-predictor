@@ -109,7 +109,7 @@ st.markdown(f"""<div class='neon-bar' style='width:{progress_width}%;'></div>"""
 
     # Countdown Timer
     with st.empty():
-    for i in range(5, 0, -1):
+        for i in range(5, 0, -1):
         st.markdown(f"⌛ Next prediction in *{i}* seconds...")
         time.sleep(1)
 
