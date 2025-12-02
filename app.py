@@ -107,7 +107,7 @@ with col3:
 
 mode = st.radio("🎯 Prediction Strategy:", ["Cautious", "Balanced", "Aggressive"], horizontal=True)
 
-Example: progress_width = 70
+# Example: progress_width = 70
 progress_width = 70  # Make sure this is defined somewhere
 st.markdown(f"""<div class='neon-bar' style='width:{progress_width}%;'></div>""", unsafe_allow_html=True)
 
