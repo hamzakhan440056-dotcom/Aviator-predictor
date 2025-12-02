@@ -109,9 +109,9 @@ st.markdown(f"""<div class='neon-bar' style='width:{progress_width}%;'></div>"""
 
     # Countdown Timer
     with st.empty():
-        for i in range(5, 0, -1):
-            st.info(f"⏳ Next prediction in {i} sec...")
-            time.sleep(1)
+    for i in range(5, 0, -1):
+        st.markdown(f"⌛ Next prediction in *{i}* seconds...")
+        time.sleep(1)
 
 # -------- HISTORY & EXPORT --------
 iifst.session_state.history:
