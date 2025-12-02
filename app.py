@@ -95,21 +95,25 @@ if 'history' not in st.session_state:
 # -------- INPUTS --------
 with st.form("prediction_form"):
     st.subheader("📥 Enter last 3 crash points:")
-    col1, col2, col3 = st.columns(3)
-    with col1:
-        n1 = st.number_input("Crash 1", min_value=1.0, step=0.1, help="Most recent")
-    with col2:
-        n2 = st.number_input("Crash 2", min_value=1.0, step=0.1)
-    with col3:
-        n3 = st.number_input("Crash 3", min_value=1.0, step=0.1)
 
-    mode = st.radio("🎯 Prediction Strategy:", ["Cautious", "Balanced", "Aggressive"], horizontal=True)
+col1, col2, col3 = st.columns(3)
 
+with col1:
+    n1 = st.number_input("Crash 1", min_value=1.0, step=0.1, help="Most recent")
+with col2:
+    n2 = st.number_input("Crash 2", min_value=1.0, step=0.1)
+with col3:
+    n3 = st.number_input("Crash 3", min_value=1.0, step=0.1)
+
+mode = st.radio("🎯 Prediction Strategy:", ["Cautious", "Balanced", "Aggressive"], horizontal=True)
+
+Example: progress_width = 70
+progress_width = 70  # Make sure this is defined somewhere
 st.markdown(f"""<div class='neon-bar' style='width:{progress_width}%;'></div>""", unsafe_allow_html=True)
 
-    # Countdown Timer
-        with st.empty():
-        for i in range(5, 0, -1):
+# Countdown Timer
+with st.empty():
+    for i in range(5, 0, -1):
         st.markdown(f"⌛ Next prediction in *{i}* seconds...")
         time.sleep(1)
 
