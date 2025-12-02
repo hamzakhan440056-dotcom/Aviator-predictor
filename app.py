@@ -29,6 +29,26 @@ st.markdown("""
         padding: 8px 18px;
         font-size: 16px;
  submitted = st.form_submit_button("🔮 Predict")
+ with st.form("predict_form"):
+    st.subheader("📥 Enter last 3 crash points:")
+    
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        n1 = st.number_input("Crash 1", min_value=1.0, step=0.1)
+    with col2:
+        n2 = st.number_input("Crash 2", min_value=1.0, step=0.1)
+    with col3:
+        n3 = st.number_input("Crash 3", min_value=1.0, step=0.1)
+
+    mode = st.radio("🎯 Prediction Strategy:", ["Cautious", "Balanced", "Aggressive"], horizontal=True)
+    
+    # 👇 Ye line zaroori hai
+    submitted = st.form_submit_button("🔮 Predict")
+
+👇 Form ke bahar logic chalayen
+if submitted:
+    # Prediction logic yahan likho
+    st.success("Prediction chalu ho gaya!")
 
 # -------- PREDICTION FUNCTION --------
 def ai_prediction(crashes, mode):
