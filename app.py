@@ -53,7 +53,7 @@ st.markdown(f"*Suggested Strategy based on input:* {suggested_strategy}")
 
 # Strategy selection
 strategy = st.radio("Choose Prediction Strategy:", ("Cautious", "Balanced", "Aggressive"), index=["Cautious", "Balanced", "Aggressive"].index(suggested_strategy))
-Multiple prediction models
+# Multiple prediction models
 def model_decision_tree(data):
     return np.mean(data) * 1.1
 
