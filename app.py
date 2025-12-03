@@ -43,7 +43,7 @@ if st.button("Predict"):
         st.warning("🟠 Medium Risk")
     else:
         st.success("🟢 Low Risk")
-      Great — here’s *Part 2: Auto Pattern Detection (Streak Warning System)* for your Aviator Predictor app.
+     # Great — here’s *Part 2: Auto Pattern Detection (Streak Warning System)* for your Aviator Predictor app.
 
 # --- Pattern Detection Helper Function ---
 def detect_streak(crashes):
