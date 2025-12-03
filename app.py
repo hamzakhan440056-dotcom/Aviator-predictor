@@ -29,7 +29,7 @@ if not st.session_state['logged_in']:
 
 # User is logged in past this point
 st.title("🚀 Aviator Predictor with Advanced Features")
-User inputs for last 3 crash points
+# User inputs for last 3 crash points
 crash1 = st.number_input("Crash 1", min_value=1.0, max_value=100.0, value=1.0, step=0.01, format="%.2f")
 crash2 = st.number_input("Crash 2", min_value=1.0, max_value=100.0, value=1.0, step=0.01, format="%.2f")
 crash3 = st.number_input("Crash 3", min_value=1.0, max_value=100.0, value=1.0, step=0.01, format="%.2f")
