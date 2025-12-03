@@ -54,15 +54,15 @@ if st.button("🔮 Predict"):
     st.success(f"🔮 Next Crash Prediction: *{prediction}x*")
 
 # --- Display History & Chart ---
-    if st.session_state.history:
-        st.subheader("📊 Prediction History (latest 20)")
+if st.session_state.history:
+    st.subheader("📊 Prediction History (latest 20)")
 
     df = pd.DataFrame(st.session_state.history[::-1])  # reverse order: latest first
     st.dataframe(df, use_container_width=True)
 
     # Simple line chart of predictions
     fig, ax = plt.subplots()
-    ax.plot(df["prediction"].astype(float).tolist()[::-1], marker='o')  # reverse back for chronological
+    ax.plot(df["prediction"].astype(float).tolist()[::-1], marker='o')
     ax.set_title("📈 Predictions Over Time")
     ax.set_ylabel("Crash Prediction (x)")
     ax.set_xlabel("Prediction #")
@@ -70,8 +70,9 @@ if st.button("🔮 Predict"):
 
     # Export button
     csv = df.to_csv(index=False).encode('utf-8')
-        st.download_button(
+    st.download_button(
         label="📥 Download History CSV",
         data=csv,
         file_name="aviator_history.csv",
-        mime="text/CSV"
+        mime="text/csv"
+    )
