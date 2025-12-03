@@ -68,7 +68,7 @@ def get_risk_level(prediction):
         return 'Low Risk', 'green'
       
 risk_text, risk_color = get_risk_level(prediction)
-Risk level bar (CSS-styled)
+# Risk level bar (CSS-styled)
 progress_width = int(min(prediction * 25, 100))  # Cap at 100%
 
 st.markdown(f"""
