@@ -24,8 +24,8 @@ if not st.session_state['logged_in']:
             st.session_state['logged_in'] = True
             st.experimental_rerun()
         else:
-        st.error("Invalid username or password")
-    st.stop()
+            st.error("Invalid username or password")
+            st.stop()
 
 # User is logged in past this point
 st.title("🚀 Aviator Predictor with Advanced Features")
