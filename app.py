@@ -58,7 +58,6 @@ def detect_streak(crashes):
 streak_msg, color = detect_streak(crashes)
 if streak_msg:
     st.markdown(f"<div style='color:{color}; font-weight:bold;'>{streak_msg}</div>", unsafe_allow_html=True)
-
 def get_risk_level(prediction):
     if prediction < 1.5:
         return 'High Risk', 'red'
