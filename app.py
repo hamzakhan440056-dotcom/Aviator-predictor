@@ -82,5 +82,5 @@ if submitted:
     df = pd.DataFrame(history, columns=["Crash Prediction"])
     csv = df.to_csv(index=False).encode('utf-8')
     txt = "\n".join(str(i) for i in history).encode()
-
-st.download_button("📝 Download TXT", txt, "crash_history.txt", "text/plain"); time.sleep(1)
+    st.download_button("📝 Download TXT", txt, "crash_history.txt", "text/plain")
+time.sleep(1)
