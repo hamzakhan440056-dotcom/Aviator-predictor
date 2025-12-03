@@ -70,7 +70,7 @@ if st.button("🔮 Predict"):
 
     # Export button
     csv = df.to_csv(index=False).encode('utf-8')
-    st.download_button(
+        st.download_button(
         label="📥 Download History CSV",
         data=csv,
         file_name="aviator_history.csv",
