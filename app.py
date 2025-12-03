@@ -11,7 +11,7 @@ st.set_page_config(page_title="✈️ Aviator Crash Predictor", layout="wide")
 st.markdown("<h1 style='text-align: center;'>✈️ Aviator Crash Predictor — Powered by AI</h1>", unsafe_allow_html=True)
 st.markdown("<h4 style='text-align: center; color: grey;'>Simple Crash Prediction | History | Export | Chart</h4>", unsafe_allow_html=True)
 st.markdown("---")
-[12/3, 6:43 PM] ChatGPT: --- Session State for History ---
+# --- Session State for History ---
 if "history" not in st.session_state:
     st.session_state.history = []
 
