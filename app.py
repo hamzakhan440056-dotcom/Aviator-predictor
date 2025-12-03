@@ -55,7 +55,7 @@ if st.button("🔮 Predict"):
 
 # --- Display History & Chart ---
     if st.session_state.history:
-    st.subheader("📊 Prediction History (latest 20)")
+        st.subheader("📊 Prediction History (latest 20)")
 
     df = pd.DataFrame(st.session_state.history[::-1])  # reverse order: latest first
     st.dataframe(df, use_container_width=True)
