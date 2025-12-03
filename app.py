@@ -61,7 +61,7 @@ if submitted:
         for i in range(5, 0, -1):
             st.markdown(f"⌛ Next prediction in *{i}* seconds...")
         if 'history' in st.session_state and len(st.session_state['history']) > 0:
-    st.markdown("---")
+        st.markdown("---")
     st.subheader("📊 Prediction History")
 
     history = st.session_state['history']
