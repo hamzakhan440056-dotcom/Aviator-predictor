@@ -8,7 +8,7 @@ from io import BytesIO
 st.set_page_config(page_title="Aviator Predictor", layout="centered")
 st.title("✈️ Aviator Crash Predictor — Powered by AI")
 
-Session state setup
+# Session state setup
 if 'history' not in st.session_state:
     st.session_state['history'] = []
 
