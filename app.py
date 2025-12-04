@@ -1,86 +1,91 @@
 import streamlit as st
 import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import time
+from io import BytesIO
 
-# --- Advanced AI-style prediction logic ---
-def make_advanced_prediction(crashes, strategy):
-    base = np.mean(crashes)
+st.set_page_config(page_title="Aviator Predictor", layout="centered")
+st.title("✈️ Aviator Crash Predictor — Powered by AI")
 
-    # Confidence logic (mock)
-    std_dev = np.std(crashes)
-    confidence = max(0, 100 - std_dev * 30)  # Lower deviation = higher confidence
+Session state setup
+if 'history' not in st.session_state:
+    st.session_state['history'] = []
 
-    # Prediction based on strategy
+def save_history(value):
+    st.session_state['history'].append(value)
+    if len(st.session_state['history']) > 100:
+        st.session_state['history'] = st.session_state['history'][-100:]
+# User input form
+with st.form("prediction_form"):
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        c1 = st.number_input("Crash 1", min_value=1.0, value=1.0)
+    with col2:
+    c2 = st.number_input("Crash 2", min_value=1.0, value=1.0)
+    with col3:
+        c3 = st.number_input("Crash 3", min_value=1.0, value=1.0)
+
+    strategy = st.radio("🎯 Prediction Strategy:", ["Cautious", "Balanced", "Aggressive"], horizontal=True)
+    submitted = st.form_submit_button("Predict")
+
+def predict(c1, c2, c3, strategy):
+    base = np.mean([c1, c2, c3])
     if strategy == "Cautious":
-        prediction = base * 0.9
+        pred = base * 0.95
     elif strategy == "Balanced":
-        prediction = base * 1.0
-    else:  # Aggressive
-        prediction = base * 1.15
-
-    prediction = round(prediction, 2)
-    confidence = round(confidence, 1)
-    return prediction, confidence
-
-# 👇 Example Usage (Add this inside your main app logic)
-st.subheader("📥 Enter last 3 crash points:")
-c1 = st.number_input("Crash 1", min_value=1.0, step=0.1)
-c2 = st.number_input("Crash 2", min_value=1.0, step=0.1)
-c3 = st.number_input("Crash 3", min_value=1.0, step=0.1)
-
-strategy = st.radio("🎯 Prediction Strategy:", ["Cautious", "Balanced", "Aggressive"], horizontal=True)
-
-if st.button("Predict"):
+        pred = base * 1.05
+    else:
+        pred = base * 1.2
+    return round(pred, 2)
+if submitted:
     crashes = [c1, c2, c3]
-    prediction, confidence = make_advanced_prediction(crashes, strategy)
+    prediction = predict(c1, c2, c3, strategy)
+    confidence = round(100 - abs(2 - prediction) * 10, 1)
 
-    st.markdown(f"### 🚀 Predicted Crash: *{prediction}x*")
-    st.markdown(f"*Confidence:* {confidence}%")
-
-    # Risk indicator
+    # Risk color
     if prediction < 1.5:
-        st.error("🔴 High Risk")
-    elif prediction < 2.5:
-        st.warning("🟠 Medium Risk")
+        risk = "🔴 High Risk"
+        color = "red"
+    elif prediction < 2.0:
+        risk = "🟠 Medium Risk"
+        color = "orange"
     else:
-        st.success("🟢 Low Risk")
-     # Great — here’s *Part 2: Auto Pattern Detection (Streak Warning System)* for your Aviator Predictor app.
+        risk = "🟢 Low Risk"
+        color = "green"
 
-# --- Pattern Detection Helper Function ---
-def detect_streak(crashes):
-    if all(c < 2.0 for c in crashes):
-        return "⚠️ Low Crash Streak Detected (High Risk!)", "red"
-    elif all(c > 3.0 for c in crashes):
-        return "🔥 High Crash Streak (Potential for dip)", "orange"
+    # Pattern detection
+    if all(x < 2 for x in crashes):
+        streak_msg = "⚠️ Low Crash Streak Detected (High Risk!)"
+    elif all(x > 2 for x in crashes):
+        streak_msg = "🔥 High Crash Streak — Opportunity!"
     else:
-        return None, None
+        streak_msg = ""
 
-# Detect crash pattern streak
-streak_msg, color = detect_streak(crashes)
-if streak_msg:
-    st.markdown(f"<div style='color:{color}; font-weight:bold;'>{streak_msg}</div>", unsafe_allow_html=True)
-def get_risk_level(prediction):
-    if prediction < 1.5:
-        return 'High Risk', 'red'
-    elif prediction < 2.5:
-        return 'Medium Risk', 'orange'
-    else:
-        return 'Low Risk', 'green'
-      
-risk_text, risk_color = get_risk_level(prediction)
-# Risk level bar (CSS-styled)
-progress_width = int(min(prediction * 25, 100))  # Cap at 100%
+    save_history(prediction)
+    st.markdown(f"### 🚀 Predicted Crash: {prediction}x")
+    st.markdown(f"Confidence: {confidence}%")
+    st.markdown(f"<span style='color:{color}'>{risk}</span>", unsafe_allow_html=True)
+    if streak_msg:
+        st.markdown(streak_msg)
 
-st.markdown(f"""
-<div style='background-color:#ddd; border-radius:10px; height:20px; width:100%; margin-top:10px;'>
-  <div style='background-color:{risk_color}; width:{progress_width}%; height:100%; border-radius:10px; text-align:center; color:white; font-weight:bold;'>
-    {risk_text}
-  </div>
-</div>
-""", unsafe_allow_html=True)
-if prediction >= 3:
-    st.balloons()  # or use st.snow() for fun effect
-countdown_placeholder = st.empty()
-for i in range(5, 0, -1):
-    countdown_placeholder.markdown(f"⌛ Next prediction in *{i}* seconds...")
-    time.sleep(1)
-countdown_placeholder.empty()
+    # Countdown
+    with st.empty():
+        for i in range(5, 0, -1):
+            st.markdown(f"⌛ Next prediction in *{i}* seconds...")
+            time.sleep(1)
+# Show chart
+if st.session_state['history']:
+    st.markdown("### 📈 Prediction History")
+    fig, ax = plt.subplots()
+    ax.plot(st.session_state['history'], marker='o', color='blue')
+    ax.set_title("Last 100 Predictions")
+    ax.set_ylabel("Multiplier")
+    st.pyplot(fig)
+
+    # Export buttons
+    csv = pd.DataFrame(st.session_state['history'], columns=["Crash Prediction"]).to_csv(index=False)
+    st.download_button("⬇️ Download CSV", csv, "predictions.csv", "text/csv")
+
+    txt = "\n".join([str(i) for i in st.session_state['history']])
+    st.download_button("📝 Download TXT", txt, "predictions.txt", "text/plain") 
