@@ -22,7 +22,7 @@ with st.form("prediction_form"):
     with col1:
         c1 = st.number_input("Crash 1", min_value=1.0, value=1.0)
         with col2:
-        c2 = st.number_input("Crash 2", min_value=1.0, value=1.0)
+            c2 = st.number_input("Crash 2", min_value=1.0, value=1.0)
     with col3:
         c3 = st.number_input("Crash 3", min_value=1.0, value=1.0)
 
